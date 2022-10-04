@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/rays.gd" type="Script" id=1]
+
+[node name="rays" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="abajo" type="RayCast2D" parent="."]
+position = Vector2( 0, 10 )
+enabled = true
+cast_to = Vector2( 0, 16 )
+
+[node name="arriba" type="RayCast2D" parent="."]
+position = Vector2( 0, -10 )
+enabled = true
+cast_to = Vector2( 0, -16 )
+
+[node name="izquierda" type="RayCast2D" parent="."]
+position = Vector2( -8, 0 )
+enabled = true
+cast_to = Vector2( -16, 0 )
+
+[node name="derecha" type="RayCast2D" parent="."]
+position = Vector2( 7, -1 )
+enabled = true
+cast_to = Vector2( 16, 0 )
