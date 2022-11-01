@@ -1,0 +1,78 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://objetos/objetos.tscn" type="PackedScene" id=1]
+[ext_resource path="res://objetos/mapa.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/tile_spawner/tile_spawner.gd" type="Script" id=4]
+[ext_resource path="res://Sprites/fondo.png" type="Texture" id=5]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends ParallaxLayer
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+var offset_x = 0.0
+var offset_y = 0.0
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+func _physics_process(delta):
+	set_motion_offset(Vector2(offset_x,offset_y))
+	offset_x += .5
+	offset_y += .5
+"
+
+[node name="level2" type="Node2D"]
+
+[node name="mapa" parent="." instance=ExtResource( 2 )]
+tile_data = PoolIntArray( 65547, 0, 327685, 65548, 0, 327683, 65549, 0, 327683, 65550, 0, 393217, 131076, 0, 327685, 131077, 0, 327683, 131078, 0, 327683, 131079, 0, 327683, 131080, 0, 327683, 131081, 0, 327683, 131082, 0, 327683, 131083, 0, 393219, 131084, 1, 0, 131085, 1, 0, 131086, 0, 393221, 131087, 0, 393217, 196612, 0, 327682, 196613, 1, 0, 196614, 1, 0, 196615, 1, 0, 196616, 1, 0, 196617, 1, 0, 196618, 1, 0, 196619, 1, 0, 196620, 1, 0, 196621, 1, 0, 196622, 1, 0, 196623, 0, 393221, 196624, 0, 327683, 196625, 0, 393217, 262148, 0, 327682, 262149, 1, 0, 262150, 1, 0, 262151, 1, 0, 262152, 1, 0, 262153, 1, 0, 262154, 0, 458753, 262155, 0, 393217, 262156, 1, 0, 262157, 1, 0, 262158, 1, 0, 262159, 1, 0, 262160, 1, 0, 262161, 0, 327682, 327684, 0, 327682, 327685, 1, 0, 327686, 1, 0, 327687, 1, 0, 327688, 1, 0, 327689, 1, 0, 327690, 1, 0, 327691, 0, 393221, 327692, 0, 458755, 327693, 1, 0, 327694, 1, 0, 327695, 1, 0, 327696, 1, 0, 327697, 0, 327682, 393220, 0, 327682, 393221, 1, 0, 393222, 1, 0, 393223, 1, 0, 393224, 1, 0, 393225, 1, 0, 393226, 1, 0, 393227, 1, 0, 393228, 1, 0, 393229, 1, 0, 393230, 0, 327685, 393231, 0, 327683, 393232, 0, 327683, 393233, 0, 393219, 458756, 0, 393221, 458757, 0, 327683, 458758, 0, 327683, 458759, 0, 327683, 458760, 0, 327683, 458761, 0, 327683, 458762, 0, 327683, 458763, 0, 327683, 458764, 0, 327683, 458765, 0, 327683, 458766, 0, 393219 )
+
+[node name="objetos" parent="." instance=ExtResource( 1 )]
+tile_data = PoolIntArray( 262151, 0, 0, 262152, 0, 0, 262159, 1, 0, 262160, 1, 0, 327686, 0, 0, 327687, 0, 0, 327695, 1, 0, 327696, 1, 0 )
+
+[node name="TileSpawner" type="Node2D" parent="."]
+script = ExtResource( 4 )
+source_tilemap = NodePath("../objetos")
+mapping = "res://mapping.json"
+clear_children_before_baking = false
+spawn_at_runtime = true
+target_node = "."
+
+[node name="player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 174, 113 )
+
+[node name="ui" type="CanvasLayer" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="ui"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ui/ParallaxBackground"]
+motion_mirroring = Vector2( 1024, 640 )
+script = SubResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="ui/ParallaxBackground/ParallaxLayer"]
+margin_right = 1024.0
+margin_bottom = 640.0
+texture = ExtResource( 5 )
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="ui"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -38.0
+margin_top = -73.0
+margin_right = 38.0
+margin_bottom = -59.0
+rect_scale = Vector2( 2, 2 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "R - Reiniciar"

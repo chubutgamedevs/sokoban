@@ -16,4 +16,4 @@ func push(direction):
 	tween.start()
 
 func _on_Tween_tween_all_completed():
-	pushing =false
+	pushing = false

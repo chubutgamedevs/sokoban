@@ -1,21 +1,26 @@
 extends KinematicBody2D
 
+var celda = 32
 var pushing = false
-onready var tween = get_parent().get_node("Tween")
+onready var tween = Tween.new()
+
+func _ready():
+	add_child(tween)
 
 func _process(delta):
-	print(name+' :', pushing)
+	
+	pass
 	
 func push(direction):
 	if pushing:
 		return
 	
-	if test_move(transform, direction * 64):
+	if test_move(transform, direction * celda):
 		return
 
 	pushing = true
 	tween.interpolate_property(
-		self, "position", position, position + direction * 64, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT
+		self, "position", position, position + direction * celda, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT
 	)
 	tween.start()
 	yield(tween, "tween_completed")

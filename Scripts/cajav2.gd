@@ -7,11 +7,12 @@ func _ready():
 	pass
 
 func mover(dir:Vector2):
-
+	
 	if !puedo_mover:
 		return
 	
 	if $rays.colisiona(dir):
+		print(dir)
 		return
 	
 	puedo_mover = false

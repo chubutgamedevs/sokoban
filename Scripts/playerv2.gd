@@ -28,10 +28,15 @@ func mover(dir:Vector2):
 		return
 	
 	if $rays.colisiona(dir):
-		if !$rays.get_collider().is_in_group("cajas"):
-			return
-		var caja = $rays.get_collider().get_parent()
-		caja.mover(dir)
+		var col=$rays.get_collider()
+		if col.is_in_group("cajas"):
+			print("caja")
+
+			col = col.get_parent()
+			col.mover(dir)
+			
+		return
+		
 	
 	puedo_mover = false
 	
