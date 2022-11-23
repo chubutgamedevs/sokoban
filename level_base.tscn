@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://addons/tile_spawner/tile_spawner.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/fondo.png" type="Texture" id=2]
+[ext_resource path="res://objetos/mapa.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objetos/objetos.tscn" type="PackedScene" id=5]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends ParallaxLayer
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+var offset_x = 0.0
+var offset_y = 0.0
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+func _physics_process(delta):
+	set_motion_offset(Vector2(offset_x,offset_y))
+	offset_x += .5
+	offset_y += .5
+"
+
+[node name="level" type="Node2D"]
+
+[node name="mapa" parent="." instance=ExtResource( 3 )]
+tile_data = PoolIntArray( 65538, 0, 327685, 65539, 0, 327683, 65540, 0, 327683, 65541, 0, 327683, 65542, 0, 327683, 65543, 0, 327683, 65544, 0, 327683, 65545, 0, 393217, 131074, 0, 327682, 131081, 0, 327682, 196610, 0, 327682, 196617, 0, 327682, 262146, 0, 327682, 262153, 0, 327682, 327682, 0, 327682, 327689, 0, 327682, 393218, 0, 327682, 393225, 0, 327682, 458754, 0, 393221, 458755, 0, 327683, 458756, 0, 327683, 458757, 0, 327683, 458758, 0, 327683, 458759, 0, 327683, 458760, 0, 327683, 458761, 0, 393219 )
+
+[node name="objetos" parent="." instance=ExtResource( 5 )]
+tile_data = PoolIntArray( 262149, 0, 0, 262152, 1, 0 )
+
+[node name="TileSpawner" type="Node2D" parent="."]
+script = ExtResource( 1 )
+source_tilemap = NodePath("../objetos")
+mapping = "res://mapping.json"
+clear_children_before_baking = false
+spawn_at_runtime = true
+target_node = "."
+
+[node name="player" parent="." instance=ExtResource( 4 )]
+position = Vector2( 115, 103 )
+
+[node name="ui" type="CanvasLayer" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="ui"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ui/ParallaxBackground"]
+motion_mirroring = Vector2( 1024, 640 )
+script = SubResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="ui/ParallaxBackground/ParallaxLayer"]
+margin_right = 1024.0
+margin_bottom = 640.0
+texture = ExtResource( 2 )
+stretch_mode = 2
